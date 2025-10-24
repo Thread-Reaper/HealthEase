@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.healthease.controllers.HealthTipsController"
+            style="-fx-background-color: #f7f9fb;">
+    <Rectangle arcHeight="8" arcWidth="8" fill="#50C878" height="100" width="1000"/>
+    <Text text="Health Tips FAQ" fill="WHITE" layoutX="20" layoutY="60">
+        <font><Font size="28"/></font>
+    </Text>
+
+    <VBox spacing="12" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="120" AnchorPane.bottomAnchor="20"
+          style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+
+        <!-- Ask box -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextArea fx:id="questionInput" promptText="Type your health question... (or select an FAQ)" wrapText="true" prefRowCount="2" HBox.hgrow="ALWAYS"/>
+            <Button text="Get Tips" onAction="#handleGetTips" style="-fx-background-color: #50C878; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <SplitPane VBox.vgrow="ALWAYS">
+            <items>
+                <!-- Left: FAQ questions -->
+                <ListView fx:id="faqList" prefWidth="350" />
+
+                <!-- Right: Answer area (top list for legacy tips, bottom text) -->
+                <VBox spacing="8" padding="10">
+                    <ListView fx:id="tipsList" visible="false" managed="false" />
+                    <TextArea fx:id="answerArea" editable="false" wrapText="true" prefRowCount="10"
+                              style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-color: #e6e6e6; -fx-border-radius: 10;"/>
+                </VBox>
+            </items>
+        </SplitPane>
+
+        <Label text="General wellness guidance only â€” not medical advice." style="-fx-text-fill: #777; -fx-font-size: 11;"/>
+    </VBox>
+</AnchorPane>
+

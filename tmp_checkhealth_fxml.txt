@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.healthease.controllers.CheckHealthController">
+    <VBox spacing="10" alignment="TOP_CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <Label text="ðŸ§  Check Your Health" style="-fx-font-size: 22px; -fx-text-fill: #333;" />
+
+        <TextField fx:id="ageField" promptText="Age" />
+        <TextField fx:id="weightField" promptText="Weight (kg)" />
+        <TextField fx:id="heightField" promptText="Height (cm)" />
+        <TextField fx:id="bpField" promptText="Blood Pressure (e.g. 120/80)" />
+        <TextField fx:id="sugarField" promptText="Blood Sugar (mg/dL)" />
+
+        <Button text="Evaluate" onAction="#evaluateHealth" />
+        <TextArea fx:id="resultArea" editable="false" wrapText="true" prefHeight="250" />
+    </VBox>
+</AnchorPane>
+

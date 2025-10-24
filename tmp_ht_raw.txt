@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.healthease.controllers.HealthTipsController"
+      alignment="TOP_CENTER" spacing="15">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Ask Your Health Question" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <TextArea fx:id="questionInput" promptText="Type your health question here..." wrapText="true" prefHeight="100" maxWidth="400"/>
+
+    <Button text="Get Tips" onAction="#handleGetTips" maxWidth="150"/>
+
+    <Separator prefWidth="400"/>
+
+    <Label text="Personalized Health Tips:" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <ListView fx:id="tipsList" prefHeight="200" maxWidth="400" />
+</VBox>
+

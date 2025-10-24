@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="406.0" prefWidth="779.0" style="-fx-background-color: #f7f9fb;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.healthease.controllers.HomeController">
+
+   <!-- Hero section (no empty space) -->
+   <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#50C878" height="186.0" width="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <VBox layoutY="18.0" prefHeight="186.0" prefWidth="439.0" spacing="10.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="18.0">
+      <Text fill="WHITE" text="Welcome to HealthEase">
+         <font><Font name="Eras Demi ITC" size="38.0" /></font>
+      </Text>
+      <Text fontSmoothingType="LCD" opacity="0.95" text="Small, consistent choices today build a stronger, healthier you.">
+         <font><Font size="16.0" /></font>
+      </Text>
+      <Text fontSmoothingType="LCD" opacity="0.9" text="Move more. Eat better. Rest well. Repeat.">
+         <font><Font size="16.0" /></font>
+      </Text>
+      <Text fontSmoothingType="LCD" opacity="0.9" text="Your journey starts here — one healthy habit at a time." wrappingWidth="402.873046875">
+         <font><Font size="16.0" /></font>
+      </Text>
+   </VBox>
+
+   <!-- Top-right actions -->
+   <HBox spacing="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="24.0">
+      <Button fx:id="profileButton" onAction="#handleProfileButton" style="-fx-background-color: white; -fx-text-fill: #50C878; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 12;" text="My Profile" />
+      <Button fx:id="messageButton" onAction="#handleMessageButton" style="-fx-background-color: white; -fx-text-fill: #50C878; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 12;" text="Message" />
+      <Button fx:id="logoutButton" onAction="#handleLogoutButton" style="-fx-background-color: white; -fx-text-fill: #e11d48; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 12;" text="Logout" />
+   </HBox>
+
+   <!-- Feature grid card below hero -->
+   <VBox layoutY="204.0" prefHeight="186.0" prefWidth="960.0" spacing="16.0" style="-fx-padding: 20; -fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="204.0">
+      <GridPane hgap="16.0" vgap="16.0">
+         <columnConstraints>
+            <ColumnConstraints percentWidth="33" />
+            <ColumnConstraints percentWidth="33" />
+            <ColumnConstraints percentWidth="33" />
+         </columnConstraints>
+
+         <!-- Row 1 -->
+         <Button fx:id="healthTipsButton" onAction="#handleHealthTipsButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Health Tips" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+         <Button fx:id="checkHealthButton" onAction="#handleCheckHealthButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Check Health" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+         <Button fx:id="communityButton" onAction="#handleCommunityButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Community" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+         <!-- Row 2 -->
+         <Button fx:id="mealPlanButton" onAction="#handleMealPlanButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Meal Plan" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+
+         <Button fx:id="gymPlanningButton" onAction="#handleGymPlanningButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Gym Planning" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+
+         <Button fx:id="healthWebButton" onAction="#handleHealthWebButton" style="-fx-background-color: #f5fff8; -fx-text-fill: #2F855A; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 20;" text="Health Web" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+   </VBox>
+
+</AnchorPane>

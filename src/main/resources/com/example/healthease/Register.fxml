@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.healthease.controllers.RegisterController"
+            prefHeight="500" prefWidth="800" style="-fx-background-color: #f7f9fb;">
+
+    <Rectangle arcHeight="8" arcWidth="8" fill="#50C878" height="100" width="1000" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>
+    <Text text="Create Account" fill="white" layoutX="24" layoutY="60">
+        <font><Font size="28"/></font>
+    </Text>
+
+    <VBox spacing="12" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200" AnchorPane.topAnchor="140"
+          style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+        <Label text="Username"/>
+        <TextField fx:id="usernameField" />
+
+        <Label text="Password"/>
+        <PasswordField fx:id="passwordField" />
+
+        <Label text="Email"/>
+        <TextField fx:id="emailField" />
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="backButton" text="Back" onAction="#handleBack"
+                    style="-fx-background-color: #e6e6e6; -fx-background-radius: 8;"/>
+            <Button fx:id="registerButton" text="Register" onAction="#handleRegister"
+                    style="-fx-background-color: #50C878; -fx-text-fill: white; -fx-background-radius: 8;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

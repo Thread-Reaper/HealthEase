@@ -1,0 +1,52 @@
+﻿package com.example.healthease.controllers;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
+public class CheckHealthController {
+    @FXML
+    private TextField ageField, weightField, heightField, bpField, sugarField;
+    @FXML
+    private TextArea resultArea;
+
+    @FXML
+    public void evaluateHealth() {
+        try {
+            int age = Integer.parseInt(ageField.getText());
+            double weight = Double.parseDouble(weightField.getText());
+            double height = Double.parseDouble(heightField.getText());
+            String bp = bpField.getText();
+            double sugar = Double.parseDouble(sugarField.getText());
+
+            double bmi = (weight / ((height / 100) * (height / 100)));
+            StringBuilder result = new StringBuilder("ðŸ§¾ Health Summary:\n\n");
+            result.append("BMI: ").append(String.format("%.2f", bmi)).append(" - ");
+            if (bmi < 18.5) result.append("Underweight\n");
+            else if (bmi < 24.9) result.append("Normal\n");
+            else if (bmi < 29.9) result.append("Overweight\n");
+            else result.append("Obese\n");
+
+            result.append("BP: ").append(bp).append(" - ");
+            if (bp.matches("\\d{2,3}/\\d{2,3}")) {
+
+                String[] bpParts = bp.split("/");
+                int sys = Integer.parseInt(bpParts[0]);
+                int dia = Integer.parseInt(bpParts[1]);
+                if (sys < 120 && dia < 80) result.append("Normal\n");
+                else if (sys < 140) result.append("Elevated\n");
+                else result.append("High BP\n");
+            } else {
+                result.append("Invalid format\n");
+            }
+
+            result.append("Blood Sugar: ").append(sugar).append(" - ");
+            if (sugar < 100) result.append("Normal\n");
+            else if (sugar < 126) result.append("Prediabetes\n");
+            else result.append("Diabetes\n");
+
+            resultArea.setText(result.toString());
+        } catch (Exception e) {
+            resultArea.setText("Please enter all values correctly.");
+        }
+    }
+}

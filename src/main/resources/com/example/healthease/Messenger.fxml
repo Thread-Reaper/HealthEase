@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.healthease.controllers.MessengerController"
+            prefHeight="640" prefWidth="1000" style="-fx-background-color: #f7f9fb;">
+
+    <!-- Header -->
+    <Rectangle arcHeight="8" arcWidth="8" fill="#50C878" height="100" width="1200"/>
+    <Label fx:id="titleLabel" layoutX="20" layoutY="35" style="-fx-text-fill: white; -fx-font-size: 26;"/>
+
+    <!-- Network bar -->
+    <HBox spacing="10" AnchorPane.topAnchor="110" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0.1, 0, 1);">
+        <Label text="Relay" style="-fx-text-fill:#2F855A; -fx-font-weight:bold;"/>
+        <TextField fx:id="serverHostField" promptText="Server IP/Host" prefWidth="180"/>
+        <TextField fx:id="serverPortField" promptText="Port" prefWidth="80"/>
+        <Button text="Connect" onAction="#handleConnectRelay" style="-fx-background-color:#50C878; -fx-text-fill:white; -fx-background-radius:8;"/>
+        <Button text="Disconnect" onAction="#handleDisconnectRelay" style="-fx-background-color:#e6e6e6; -fx-background-radius:8;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="networkStatusLabel" text="Offline" style="-fx-text-fill:#777;"/>
+    </HBox>
+
+    <!-- Panels -->
+    <HBox spacing="16" AnchorPane.topAnchor="160" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        <!-- Left: Users -->
+        <VBox prefWidth="300" spacing="8" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+            <Label text="Users / Peers" style="-fx-font-weight: bold; -fx-text-fill: #2F855A;"/>
+            <HBox spacing="6">
+                <TextField fx:id="peerField" promptText="Peer username (relay)" HBox.hgrow="ALWAYS"/>
+                <Button text="Refresh" onAction="#handleRefreshRelayUsers"/>
+            </HBox>
+            <ListView fx:id="userListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+        <!-- Right: Messages -->
+        <VBox spacing="8" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+            <ListView fx:id="messageListView" prefHeight="420" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <TextField fx:id="messageField" HBox.hgrow="ALWAYS" promptText="Type your message here..." onAction="#handleSendMessage"/>
+                <Button text="Send" onAction="#handleSendMessage" style="-fx-background-color: #50C878; -fx-text-fill: white; -fx-background-radius: 8;"/>
+                <Button text="Back" onAction="#handleBack" style="-fx-background-color: #e6e6e6; -fx-background-radius: 8;"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</AnchorPane>

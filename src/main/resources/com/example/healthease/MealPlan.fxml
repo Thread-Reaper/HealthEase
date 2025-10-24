@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.healthease.controllers.MealPlanController"
+            style="-fx-background-color: #f7f9fb;">
+
+    <!-- Header Bar -->
+    <Rectangle arcHeight="8" arcWidth="8" fill="#50C878" height="80" width="1000" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
+    <Text text="Meal Plan Generator" fill="white" layoutX="24" layoutY="48">
+        <font>
+            <Font size="24" />
+        </font>
+    </Text>
+
+    <!-- Content Card -->
+    <VBox spacing="16" prefWidth="760" AnchorPane.topAnchor="96" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+          style="-fx-padding: 20; -fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+
+        <!-- Inputs Grid -->
+        <GridPane hgap="12" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints minWidth="120"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="40"/>
+                <RowConstraints minHeight="40"/>
+                <RowConstraints minHeight="40"/>
+                <RowConstraints minHeight="40"/>
+            </rowConstraints>
+
+            <Label text="Age" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="ageField" promptText="e.g. 25" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+            <Label text="Gender" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <ComboBox fx:id="genderCombo" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+            <Label text="Activity Level" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ComboBox fx:id="activityLevelCombo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <Label text="Goal" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="goalCombo" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+            <Label text="Diet Preference" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ComboBox fx:id="dietPreferenceCombo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="Allergies (comma separated)" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="allergiesField" promptText="e.g. nuts, dairy, gluten" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        </GridPane>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Generate Meal Plan" onAction="#generateMealPlan"
+                    style="-fx-background-color: #50C878; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-padding: 8 16;"/>
+        </HBox>
+
+        <!-- Results Card -->
+        <VBox spacing="8" style="-fx-background-color: #fafafa; -fx-padding: 16; -fx-background-radius: 10; -fx-border-color: #e6e6e6; -fx-border-radius: 10;">
+            <Label text="Breakfast" style="-fx-font-weight: bold; -fx-text-fill: #2F855A;" />
+            <Label fx:id="breakfastLabel" wrapText="true" />
+
+            <Separator />
+            <Label text="Lunch" style="-fx-font-weight: bold; -fx-text-fill: #2F855A;" />
+            <Label fx:id="lunchLabel" wrapText="true" />
+
+            <Separator />
+            <Label text="Dinner" style="-fx-font-weight: bold; -fx-text-fill: #2F855A;" />
+            <Label fx:id="dinnerLabel" wrapText="true" />
+
+            <Separator />
+            <Label text="Snacks" style="-fx-font-weight: bold; -fx-text-fill: #2F855A;" />
+            <Label fx:id="snacksLabel" wrapText="true" />
+        </VBox>
+    </VBox>
+
+</AnchorPane>
