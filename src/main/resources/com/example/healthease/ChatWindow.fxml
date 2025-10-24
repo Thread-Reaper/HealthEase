@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.healthease.controllers.ChatController"
+            prefHeight="560" prefWidth="800" style="-fx-background-color: #f7f9fb;">
+
+    <Rectangle arcHeight="8" arcWidth="8" fill="#50C878" height="100" width="1000"/>
+    <Label fx:id="titleLabel" layoutX="20" layoutY="35" style="-fx-text-fill: white; -fx-font-size: 26;" text="Chat"/>
+
+    <VBox spacing="10" AnchorPane.topAnchor="120" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20"
+          style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.1, 0, 2);">
+        <HBox spacing="10">
+            <Label text="Relay:" style="-fx-text-fill:#2F855A; -fx-font-weight:bold;"/>
+            <Label fx:id="networkStatusLabel" text="Connecting..."/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Close" onAction="#handleClose" style="-fx-background-color:#e6e6e6; -fx-background-radius:8;"/>
+        </HBox>
+        <ListView fx:id="messageListView" VBox.vgrow="ALWAYS"/>
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <TextField fx:id="messageField" HBox.hgrow="ALWAYS" promptText="Type a message..." onAction="#handleSendMessage"/>
+            <Button text="Send" onAction="#handleSendMessage" style="-fx-background-color:#50C878; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

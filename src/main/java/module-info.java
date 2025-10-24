@@ -1,4 +1,4 @@
-module com.example.healthease {
+﻿module com.example.healthease {
     // JavaFX modules
     requires transitive javafx.controls;
     requires transitive javafx.fxml;
@@ -6,6 +6,7 @@ module com.example.healthease {
 
     // Java Standard modules
     requires transitive java.sql;
+    requires java.net.http;
     requires java.desktop; // Required if you use java.awt (e.g. for fonts, images, or colors)
     // java.xml not strictly required now that Program AB is removed
 

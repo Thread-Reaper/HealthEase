@@ -1,107 +1,137 @@
-package com.example.healthease.controllers;
+﻿package com.example.healthease.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class HealthTipsController {
 
-    @FXML private TextArea questionInput;
-    @FXML private ListView<String> tipsList; // Used to show the answer lines
-    @FXML private ListView<String> faqList;  // New: shows 20+ FAQ questions
-    @FXML private TextArea answerArea;       // New: shows the selected FAQ answer
+    @FXML private ComboBox<String> categoryCombo;
+    @FXML private ListView<String> questionList;
+    @FXML private TextArea answerArea;
 
-    private final LinkedHashMap<String, String> faqMap = new LinkedHashMap<>();
+    private final LinkedHashMap<String, LinkedHashMap<String, String>> faqsByCategory = new LinkedHashMap<>();
 
     @FXML
     private void initialize() {
         seedFaqs();
-        if (faqList != null) {
-            faqList.setItems(FXCollections.observableArrayList(faqMap.keySet()));
-            faqList.getSelectionModel().selectedItemProperty().addListener((obs, o, q) -> showAnswer(q));
-            // Select first by default
-            if (!faqMap.isEmpty()) faqList.getSelectionModel().select(0);
+        ObservableList<String> cats = FXCollections.observableArrayList(faqsByCategory.keySet());
+        if (categoryCombo != null) {
+            categoryCombo.setItems(cats);
+            if (!cats.isEmpty()) categoryCombo.getSelectionModel().select(0);
+            categoryCombo.getSelectionModel().selectedItemProperty().addListener((obs, o, n) -> loadQuestions(n));
+        }
+        // Load first category questions
+        if (!cats.isEmpty()) loadQuestions(cats.get(0));
+    }
+
+    private void loadQuestions(String category) {
+        if (category == null) return;
+        LinkedHashMap<String, String> map = faqsByCategory.get(category);
+        if (map == null) return;
+        if (questionList != null) {
+            questionList.setItems(FXCollections.observableArrayList(map.keySet()));
+            if (!map.isEmpty()) questionList.getSelectionModel().select(0);
+            questionList.getSelectionModel().selectedItemProperty().addListener((obs, o, q) -> showAnswer(category, q));
+        }
+        // Show first answer
+        if (!map.isEmpty()) showAnswer(category, map.keySet().iterator().next());
+    }
+
+    private void showAnswer(String category, String question) {
+        if (category == null || question == null) return;
+        LinkedHashMap<String, String> map = faqsByCategory.get(category);
+        if (map == null) return;
+        String answer = map.getOrDefault(question, "No answer available.");
+        if (answerArea != null) {
+            answerArea.setText(answer);
         }
     }
 
     private void seedFaqs() {
-        faqMap.clear();
-        faqMap.put("How do I start exercising safely as a beginner?",
-                "Start with 10–20 minutes of brisk walking 3–4x/week. Add light bodyweight moves (squats, wall push-ups, glute bridges). Focus on form, not speed. Increase total time by ~10% per week.");
-        faqMap.put("What is a balanced plate for meals?",
-                "Half non‑starchy vegetables, a quarter lean protein (chicken, fish, tofu, beans), a quarter whole grains or starchy veg, plus water. Add fruit or yogurt if hungry.");
-        faqMap.put("Tips to lose weight sustainably?",
-                "Aim for a small calorie deficit (300–500 kcal/day). Prioritize protein and fiber, limit sugary drinks, move daily (8–10k steps), and strength train 2x/week.");
-        faqMap.put("How much water should I drink?",
-                "A practical target is 6–8 glasses per day. More if it’s hot or you’re active. Use urine color (pale straw) as a simple guide.");
-        faqMap.put("I sit all day. How can I stay active?",
-                "Set a timer to stand and move 2–3 minutes every 60–90 minutes. Add a short walk after meals. Try desk stretches and evening walks.");
-        faqMap.put("How many hours of sleep do adults need?",
-                "Most adults do best with 7–9 hours. Keep a consistent schedule, reduce screens 60 minutes before bed, and keep your room dark, cool, and quiet.");
-        faqMap.put("Healthy snack ideas?",
-                "Greek yogurt with berries, fruit and nuts, hummus with carrots, boiled eggs, whole‑grain crackers with cheese, or a protein smoothie.");
-        faqMap.put("How often should I strength train?",
-                "2–3 nonconsecutive days per week. 6–10 sets per muscle group weekly is a solid start. Cover push, pull, legs, and core.");
-        faqMap.put("Cardio vs. strength—what mix is good?",
-                "Aim for 150 min/week moderate cardio (or 75 min vigorous) plus 2+ strength sessions. Mix depends on your goals; combine both for health.");
-        faqMap.put("Any tips to manage stress?",
-                "Try 4‑7‑8 breathing (4s inhale, 7s hold, 8s exhale) for 3–5 minutes. Schedule short walks, limit late caffeine, and keep a simple wind‑down routine.");
-        faqMap.put("Breakfast ideas for energy?",
-                "Oats + milk + nuts/fruit; eggs with whole‑grain toast and veggies; Greek yogurt parfait; smoothie with fruit, spinach, and protein.");
-        faqMap.put("How to build a daily movement habit?",
-                "Attach it to an existing routine (after brushing teeth, take a 10‑minute walk). Keep it small and consistent, and track streaks.");
-        faqMap.put("How to avoid injury when working out?",
-                "Warm up 5–10 minutes, progress gradually (≈10%/week), focus on technique, and rest when sore. If sharp pain persists, seek professional advice.");
-        faqMap.put("What’s a good pre‑workout snack?",
-                "1–2 hours before: fruit + yogurt, toast with peanut butter, or a small rice bowl with chicken. Keep it light if training soon.");
-        faqMap.put("How much protein do I need?",
-                "General guidance: 1.2–2.0 g/kg/day depending on activity and goals. Spread across meals for better satiety and muscle support.");
-        faqMap.put("How to cut down on sugar?",
-                "Swap sugary drinks for water/sparkling water, choose fruit over sweets, and read labels. Keep desserts planned (e.g., once or twice weekly)." );
-        faqMap.put("Best way to track progress?",
-                "Pick 2–3 metrics: energy, sleep quality, steps, workout consistency, or waist measurement. Review weekly; look for trends, not perfection.");
-        faqMap.put("Healthy lunchbox ideas?",
-                "Whole‑grain wrap with chicken/tofu and veggies; rice + beans + salsa + avocado; quinoa salad with chickpeas and roasted veggies.");
-        faqMap.put("How to stay motivated long term?",
-                "Set small process goals (walk 15 min daily), celebrate consistency, and plan for imperfect days. Make it enjoyable—music, a buddy, or outdoors.");
-        faqMap.put("Simple home workout plan?",
-                "3x/week: 3 rounds of squats, push‑ups (or wall), rows (band/backpack), hip hinges, and planks. 8–15 reps each, rest 1 minute between moves.");
-    }
+        // Categories: Nutrition, Fitness, Sleep, Stress, Hydration, Weight Management
+        LinkedHashMap<String, String> nutrition = new LinkedHashMap<>();
+        nutrition.put("What is a balanced plate?", "Aim for half vegetables, a quarter lean protein (chicken, fish, tofu, beans), and a quarter whole grains or starchy veg. Add water and fruit.");
+        nutrition.put("How much protein do I need?", "General guide: 1.2 to 2.0 g per kg body weight per day, depending on activity and goals.");
+        nutrition.put("Healthy breakfast ideas?", "Oats with milk and fruit, eggs with whole grain toast and veggies, Greek yogurt parfait, or a fruit-protein smoothie.");
+        nutrition.put("Best snacks for energy?", "Fruit with nuts or yogurt, hummus with carrots, boiled eggs, whole grain crackers with cheese, or a protein smoothie.");
+        nutrition.put("How to reduce sugar?", "Swap sugary drinks for water or sparkling water, choose fruit over sweets, read labels, and plan treats instead of daily snacking.");
+        nutrition.put("Are carbs bad?", "No. Choose mostly fiber-rich carbs like oats, brown rice, potatoes, beans, fruit, and vegetables. Adjust portions for your goals.");
+        nutrition.put("Do I need supplements?", "Food first. Supplements can help fill gaps (e.g., vitamin D, omega-3) but ask a professional if you have medical conditions.");
+        nutrition.put("How to eat out and stay healthy?", "Prioritize protein and vegetables, choose baked or grilled options, limit creamy sauces, and watch sugary drinks.");
+        nutrition.put("What about intermittent fasting?", "It can help some people manage calories. Focus on overall quality, protein, and consistency. Not required for results.");
+        nutrition.put("How to increase fiber?", "Add fruit, vegetables, legumes, and whole grains. Increase gradually and drink water to reduce stomach discomfort.");
+        faqsByCategory.put("Nutrition", nutrition);
 
-    private void showAnswer(String question) {
-        if (question == null) return;
-        String answer = faqMap.getOrDefault(question, "No answer available.");
-        if (answerArea != null) {
-            answerArea.setText(answer + "\n\nNote: General wellness guidance only—consult a professional for personal medical advice.");
-        } else {
-            // Fallback: show in tipsList if answerArea is not present
-            tipsList.getItems().setAll(Arrays.asList(answer.split("\\r?\\n")));
-        }
-    }
+        LinkedHashMap<String, String> fitness = new LinkedHashMap<>();
+        fitness.put("Beginner exercise plan?", "Start with walking 15 to 20 minutes most days plus 2 short strength sessions: squats, push-ups (wall if needed), rows, and planks.");
+        fitness.put("How often to strength train?", "Aim for 2 to 3 nonconsecutive days per week. Cover push, pull, legs, and core. Focus on good form.");
+        fitness.put("Cardio vs strength balance?", "A practical mix is 150 minutes per week of moderate cardio plus 2 or more strength sessions. Adjust for goals.");
+        fitness.put("Warm-up ideas?", "5 to 10 minutes of easy cardio and dynamic mobility: leg swings, hip circles, arm circles, light bodyweight moves.");
+        fitness.put("How to avoid injury?", "Progress gradually (about 10 percent per week), use controlled form, and rest when you feel sharp pain or excessive fatigue.");
+        fitness.put("At-home workouts?", "Use bodyweight circuits: squats, lunges, push-ups, hip hinges, rows with bands or backpack, and planks.");
+        fitness.put("How to build consistency?", "Attach workouts to a routine time, start small, track sessions, and keep rest days. Consistency beats perfection.");
+        fitness.put("Soreness vs pain?", "Mild soreness after new training is normal and fades in 1 to 3 days. Sharp joint pain suggests backing off and adjusting.");
+        fitness.put("How to improve flexibility?", "Do light dynamic mobility before workouts and short stretches after. Train full range of motion in strength work.");
+        fitness.put("HIIT tips?", "Keep intervals short at first (20 to 30 seconds hard, 60 to 90 seconds easy). 6 to 10 rounds are plenty for beginners.");
+        faqsByCategory.put("Fitness", fitness);
 
-    @FXML
-    private void handleGetTips() {
-        String query = questionInput != null ? questionInput.getText().trim().toLowerCase() : "";
-        if (query.isEmpty()) {
-            if (tipsList != null) tipsList.getItems().setAll("Please enter a health-related question or select an FAQ on the left.");
-            return;
-        }
+        LinkedHashMap<String, String> sleep = new LinkedHashMap<>();
+        sleep.put("How many hours do I need?", "Most adults feel best with 7 to 9 hours per night. Aim for a consistent sleep and wake time.");
+        sleep.put("How to fall asleep faster?", "Reduce screens 60 minutes before bed, dim lights, keep room cool and dark, and use a short wind-down routine.");
+        sleep.put("Best sleep environment?", "Dark, quiet, cool (around 18 to 20 C). Use blackout curtains, white noise, and a comfortable mattress.");
+        sleep.put("Napping tips?", "Short naps of 10 to 20 minutes earlier in the day can boost alertness. Avoid long naps late in the afternoon.");
+        sleep.put("Caffeine timing?", "Avoid caffeine within 6 to 8 hours of bedtime. Watch hidden sources like tea, soda, energy drinks, and chocolate.");
+        sleep.put("Weekends and sleep?", "Keep a similar schedule on weekends. Large shifts can make Monday harder and disrupt rhythm.");
+        sleep.put("Waking up at night?", "Keep lights low, avoid screens, and try calm breathing. If awake for long, get up briefly and do something relaxing.");
+        sleep.put("Exercise effect on sleep?", "Regular activity improves sleep quality. Intense evening workouts can delay sleep for some people.");
+        sleep.put("Food and sleep?", "Large meals late can disturb sleep. A light snack with protein and carbs (yogurt and fruit) may help some.");
+        sleep.put("Tracking sleep?", "Wearables can be helpful trends but are imperfect. Focus on how you feel and daily energy.");
+        faqsByCategory.put("Sleep", sleep);
 
-        // Very simple keyword match to best FAQ
-        String best = null; int bestScore = 0;
-        for (String q : faqMap.keySet()) {
-            int score = 0;
-            for (String token : query.split("\\s+")) {
-                if (token.length() > 3 && q.toLowerCase().contains(token)) score++;
-            }
-            if (score > bestScore) { bestScore = score; best = q; }
-        }
-        if (best == null) best = faqMap.keySet().iterator().next();
-        showAnswer(best);
-        if (faqList != null) faqList.getSelectionModel().select(best);
+        LinkedHashMap<String, String> stress = new LinkedHashMap<>();
+        stress.put("Quick stress relief?", "Try 4-7-8 breathing for 3 to 5 minutes, a short walk, sunlight, or a brief journal to clear your head.");
+        stress.put("Daily habits to reduce stress?", "Regular movement, consistent sleep, outdoor time, and simple routines help build resilience.");
+        stress.put("How to start mindfulness?", "Begin with 5 minutes of relaxed breathing or a short guided session. Focus on the breath and let thoughts pass.");
+        stress.put("Managing workload?", "Use a short task list, set realistic priorities, time-box focused work, and include small breaks.");
+        stress.put("Evening wind-down?", "Dim lights, avoid heavy screens, stretch gently, read paper books, and set tomorrow's plan in 5 minutes.");
+        stress.put("Caffeine and stress?", "Too much caffeine can increase anxiety. Keep total moderate and avoid late intake.");
+        stress.put("Social support?", "Talk with friends or family, join a group, or schedule a weekly check-in. Connection lowers stress.");
+        stress.put("Overthinking tips?", "Write thoughts quickly on paper, set a 10-minute worry window, then return to action or a walk.");
+        stress.put("Digital overload?", "Turn off nonessential notifications, batch messages, and set phone-free times like meals and before bed.");
+        stress.put("Professional help?", "If stress affects daily life for weeks, consider speaking with a counselor or healthcare professional.");
+        faqsByCategory.put("Stress", stress);
+
+        LinkedHashMap<String, String> hydration = new LinkedHashMap<>();
+        hydration.put("How much water per day?", "A practical goal is about 6 to 8 glasses. Drink more in heat or activity. Pale yellow urine is a simple guide.");
+        hydration.put("Hydration for workouts?", "Drink a glass 1 to 2 hours before, sip during longer sessions, and rehydrate after. Add electrolytes for heavy sweating.");
+        hydration.put("Signs of dehydration?", "Dark urine, dry mouth, headache, low energy, and dizziness. Drink water and rest in a cool place.");
+        hydration.put("Can I count tea and coffee?", "Yes, they contribute to fluid intake, but large amounts of caffeine can increase bathroom trips for some.");
+        hydration.put("Water or sports drink?", "Water is fine for most. Use sports drinks for long, sweaty sessions or very hot conditions.");
+        hydration.put("Hydration at work?", "Keep a bottle on your desk and set small sip reminders every 60 to 90 minutes.");
+        hydration.put("Does fruit help hydration?", "Yes. Foods like watermelon, oranges, cucumber, and soups add fluids to your day.");
+        hydration.put("Clear skin and water?", "Hydration supports skin health, but overall diet, sleep, and stress also matter.");
+        hydration.put("How to build the habit?", "Drink a glass after waking, with each meal, and before workouts. Keep water visible.");
+        hydration.put("Too much water?", "Excess can dilute electrolytes. Listen to thirst and avoid forcing extreme amounts in short periods.");
+        faqsByCategory.put("Hydration", hydration);
+
+        LinkedHashMap<String, String> weight = new LinkedHashMap<>();
+        weight.put("How to lose weight safely?", "Create a small calorie deficit (about 300 to 500 kcal per day), prioritize protein and fiber, and be active daily.");
+        weight.put("Best diet for weight loss?", "The one you can stick to. Choose whole foods, adequate protein, and meals you enjoy to stay consistent.");
+        weight.put("Role of strength training?", "Lifting helps keep muscle while losing fat. Aim for 2 to 3 sessions per week alongside walking and activity.");
+        weight.put("Tracking progress?", "Use 2 to 3 metrics: energy, sleep, steps, workout consistency, or waist measurement. Review weekly trends.");
+        weight.put("Plateaus?", "Normal. Check portions, steps, sleep, and stress. Make one small change and give it 1 to 2 weeks.");
+        weight.put("Cheat meals?", "Plan treats so they fit your week. Avoid all-or-nothing swings; focus on overall balance.");
+        weight.put("Late-night eating?", "Keep dinner satisfying with protein and fiber. If hungry later, choose a light protein-carb snack.");
+        weight.put("Calories and accuracy?", "Labels can vary. Use portion awareness and adjust based on progress, not perfection.");
+        weight.put("Walking and fat loss?", "Daily steps improve calorie burn and health. Combine with strength training and nutrition basics.");
+        weight.put("How fast should I lose?", "A steady 0.25 to 0.75 kg per week is realistic for many people. Faster loss is harder to maintain.");
+        faqsByCategory.put("Weight Management", weight);
     }
 }

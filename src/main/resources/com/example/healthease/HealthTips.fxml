@@ -6,22 +6,32 @@
 
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.healthease.controllers.HealthTipsController"
-      alignment="TOP_CENTER" spacing="15">
+      alignment="TOP_LEFT" spacing="12">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <Label text="Ask Your Health Question" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="Health Tips" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
 
-    <TextArea fx:id="questionInput" promptText="Type your health question here..." wrapText="true" prefHeight="100" maxWidth="400"/>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label text="Category:"/>
+        <ComboBox fx:id="categoryCombo" prefWidth="260"/>
+    </HBox>
 
-    <Button text="Get Tips" onAction="#handleGetTips" maxWidth="150"/>
+    <SplitPane dividerPositions="0.4">
+        <items>
+            <VBox spacing="6">
+                <Label text="Questions" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="questionList" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox spacing="6">
+                <Label text="Answer" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="answerArea" wrapText="true" editable="false" prefHeight="400" VBox.vgrow="ALWAYS"
+                          promptText="Select a question to see the answer."/>
+            </VBox>
+        </items>
+    </SplitPane>
 
-    <Separator prefWidth="400"/>
-
-    <Label text="Personalized Health Tips:" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
-
-    <ListView fx:id="tipsList" prefHeight="200" maxWidth="400" />
-
+    
 </VBox>
